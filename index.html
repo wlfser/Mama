@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños Mamá</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #d4716d;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .intro {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .recuerdos-section {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .recuerdos-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .recuerdo-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: left;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .recuerdo-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .recuerdo-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recuerdo-card p {
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+
+        .lock-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .lock-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            max-width: 250px;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            text-align: center;
+            margin: 15px 0;
+            letter-spacing: 3px;
+        }
+
+        .btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-heart {
+            background: #ff6b9d;
+            color: white;
+            font-size: 1.2em;
+            padding: 15px 35px;
+        }
+
+        .btn-heart:hover {
+            background: #ff5588;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .carta-completa {
+            text-align: left;
+            padding: 30px;
+            background: #fff9f0;
+            border-radius: 15px;
+            border-left: 5px solid #d4716d;
+            margin: 20px 0;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .carta-completa p {
+            margin: 15px 0;
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.05em;
+        }
+
+        .firma {
+            text-align: right;
+            font-style: italic;
+            margin-top: 30px;
+            color: #d4716d;
+            font-size: 1.1em;
+        }
+
+        .flores {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .error {
+            color: #ff4444;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .success {
+            color: #44ff88;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .interactive-btns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .heart-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .heart {
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0.4;
+            transform: scale(1);
+        }
+
+        .heart.active {
+            opacity: 1;
+            animation: heartBeat 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
+        }
+
+        .message-box {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .message-box.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .contador {
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.8);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🎂 ¡Feliz Cumpleaños, Mamá! 🎂</h1>
+            
+            <div class="flores">🌸 🌺 🌷 🌹 🌻</div>
+            
+            <div class="intro">
+                <p>Mamá, en este día tan especial, quiero recordar todo lo que significas para mí...</p>
+            </div>
+
+            <div class="recuerdos-section">
+                <h2>✨ Nuestros Recuerdos Especiales ✨</h2>
+                <p class="contador">Haz clic en cada recuerdo para verlo brillar 💫</p>
+                
+                <div class="recuerdo-card" onclick="highlightRecuerdo(this)">
+                    <h3>✈️ Nuestros Viajes</h3>
+                    <p>Cada viaje contigo ha sido una aventura inolvidable. Esos momentos explorando juntos, riendo en el camino, descubriendo nuevos lugares... son recuerdos que guardo en mi corazón para siempre.</p>
+                </div>
+
+                <div class="recuerdo-card" onclick="highlightRecuerdo(this)">
+                    <h3>💪 Tu Lucha Constante</h3>
+                    <p>Veo todos los días cómo luchas por nosotros, cómo das todo de ti sin esperar nada a cambio. Tu fuerza y dedicación son un ejemplo que me inspira a ser mejor cada día. Gracias por tanto sacrificio.</p>
+                </div>
+
+                <div class="recuerdo-card" onclick="highlightRecuerdo(this)">
+                    <h3>🎁 Tus Mimos y Consentimientos</h3>
+                    <p>Esas veces que me consientes, que me haces sentir especial, que me das esos detalles que solo una madre puede dar... Todo eso me hace sentir amado y valorado. Nadie lo hace como tú.</p>
+                </div>
+
+                <div class="recuerdo-card" onclick="highlightRecuerdo(this)">
+                    <h3>🎓 Mi Universidad - Tu Fe en Mí</h3>
+                    <p>Gracias a ti estoy estudiando en la universidad que siempre soñé. Cuando nadie más creía en mí, TÚ sí lo hiciste. Tu fe en mí me dio la fuerza para seguir adelante. Todo lo que logre será también tu logro, porque sin ti nada de esto sería posible.</p>
+                </div>
+            </div>
+
+            <div class="heart-container">
+                <span class="heart" onclick="activateHeart(this)">❤️</span>
+                <span class="heart" onclick="activateHeart(this)">💕</span>
+                <span class="heart" onclick="activateHeart(this)">💖</span>
+                <span class="heart" onclick="activateHeart(this)">💗</span>
+                <span class="heart" onclick="activateHeart(this)">💝</span>
+            </div>
+
+            <div class="interactive-btns">
+                <button class="btn" onclick="showMessage(1)">💐 Un mensaje para ti</button>
+                <button class="btn" onclick="showMessage(2)">🎈 Lo que admiro de ti</button>
+                <button class="btn" onclick="showMessage(3)">⭐ Nuestros momentos</button>
+            </div>
+
+            <div id="msg1" class="message-box">
+                <strong>Eres la persona más fuerte que conozco.</strong> Gracias por todo lo que haces cada día.
+            </div>
+            <div id="msg2" class="message-box">
+                <strong>Admiro tu dedicación y tu amor incondicional.</strong> Siempre estás ahí cuando te necesito.
+            </div>
+            <div id="msg3" class="message-box">
+                <strong>Los momentos contigo son invaluables.</strong> Cada risa, cada conversación, cada pelea incluso... todo forma parte de nuestro lazo especial.
+            </div>
+
+            <div id="lockSection">
+                <div class="lock-box">
+                    <div class="lock-icon">🔒</div>
+                    <h2>Caja Sorpresa</h2>
+                    <p>Ingresa el código secreto para leer la carta completa</p>
+                    <input type="password" id="passwordInput" placeholder="• • • • • •" maxlength="6">
+                    <br>
+                    <button class="btn" onclick="checkPassword()">Abrir</button>
+                    <div id="errorMsg" class="error"></div>
+                </div>
+            </div>
+
+            <div id="cartaCompleta" class="hidden">
+                <div class="lock-box" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                    <div class="lock-icon">🔓</div>
+                    <h2>¡Contraseña Correcta!</h2>
+                    <p class="success">La carta está desbloqueada 💚</p>
+                </div>
+
+                <div class="carta-completa">
+                    <h2 style="color: #d4716d; margin-bottom: 20px;">Querida Mamá,</h2>
+                    
+                    <p>Hoy es tu día y quiero que sepas lo mucho que significas para mí. Sé que a veces no es fácil, que tenemos nuestras diferencias y que incluso llegamos a pelear, pero ¿sabes qué? Creo que es precisamente porque nos parecemos tanto.</p>
+                    
+                    <p>Amo cuando comparto tiempo contigo. Esos momentos, por simples que sean, se quedan grabados en mi corazón. Cada conversación, cada risa compartida, incluso nuestros desacuerdos, me recuerdan lo afortunado que soy de tenerte como madre.</p>
+
+                    <p>Gracias por creer en mí cuando nadie más lo hacía. Hoy estoy en la universidad que tanto soñé gracias a ti, a tu fe inquebrantable en mis capacidades. Nunca olvidaré que fuiste la única que vio en mí lo que yo a veces no podía ver. Ese regalo no tiene precio.</p>
+
+                    <p>Veo cómo luchas día a día por nosotros, cómo te sacrificas sin pensarlo dos veces, cómo nos consientes incluso cuando tú también necesitas ser consentida. Eres el pilar de esta familia y aunque a veces no lo diga con palabras, lo valoro profundamente.</p>
+
+                    <p>Nuestros viajes, nuestras conversaciones, tus consejos, tus regaños... todo eso me ha formado. Ver tanto de mí en ti (y viceversa) a veces genera chispas, pero también me hace entenderte mejor y valorar cada momento a tu lado.</p>
+                    
+                    <p>Eres fuerte, resiliente, amorosa y el mejor ejemplo que pude tener. Gracias por ser mi guía, mi apoyo, mi confidente. Gracias por amarme incluso cuando no es fácil, por estar ahí en cada momento importante y por ser simplemente tú: María Alexandra, mi mamá.</p>
+                    
+                    <p>Que este nuevo año de vida esté lleno de alegría, salud, amor y todas esas cosas hermosas que tanto mereces. Quiero seguir creando más recuerdos contigo, seguir aprendiendo de ti y seguir diciendo, con todo mi corazón, que eres la mejor mamá del mundo.</p>
+                    
+                    <div class="firma">
+                        Con todo mi amor,<br>
+                        Tu hijo que tanto te ama 💕
+                    </div>
+                </div>
+
+                <button class="btn btn-heart" onclick="finalSurprise()">❤️ Un último detalle ❤️</button>
+                
+                <div id="finalMsg" class="message-box">
+                    <h3 style="color: #d4716d;">¡Te amo, Mamá! 🎉</h3>
+                    <p>Que todos tus deseos se hagan realidad. Feliz cumpleaños! 🎂🎈🎁</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function activateHeart(element) {
+            element.classList.toggle('active');
+        }
+
+        function highlightRecuerdo(element) {
+            // Quitar highlight de otros
+            document.querySelectorAll('.recuerdo-card').forEach(card => {
+                card.style.background = 'rgba(255, 255, 255, 0.15)';
+            });
+            
+            // Highlight al seleccionado
+            element.style.background = 'rgba(255, 255, 255, 0.35)';
+            
+            // Crear efecto de estrellas
+            for(let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    createStar(element);
+                }, i * 100);
+            }
+        }
+
+        function createStar(parent) {
+            const star = document.createElement('span');
+            star.textContent = '✨';
+            star.style.position = 'absolute';
+            star.style.fontSize = '20px';
+            star.style.pointerEvents = 'none';
+            star.style.animation = 'starFloat 1s ease-out forwards';
+            
+            const rect = parent.getBoundingClientRect();
+            star.style.left = rect.left + Math.random() * rect.width + 'px';
+            star.style.top = rect.top + 'px';
+            
+            document.body.appendChild(star);
+            
+            setTimeout(() => star.remove(), 1000);
+        }
+
+        function showMessage(num) {
+            const msg = document.getElementById('msg' + num);
+            const allMessages = document.querySelectorAll('.message-box');
+            allMessages.forEach(m => m.classList.remove('show'));
+            msg.classList.add('show');
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMsg');
+            const lockSection = document.getElementById('lockSection');
+            const cartaCompleta = document.getElementById('cartaCompleta');
+            
+            if (input.value === '421567') {
+                errorMsg.textContent = '';
+                lockSection.style.display = 'none';
+                cartaCompleta.classList.remove('hidden');
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            } else {
+                errorMsg.textContent = '❌ Contraseña incorrecta. Intenta de nuevo.';
+                input.value = '';
+                input.style.animation = 'none';
+                setTimeout(() => {
+                    input.style.animation = 'heartBeat 0.5s';
+                }, 10);
+            }
+        }
+
+        function finalSurprise() {
+            const finalMsg = document.getElementById('finalMsg');
+            finalMsg.classList.add('show');
+            
+            // Crear corazones flotantes
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createFloatingHeart();
+                }, i * 100);
+            }
+        }
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.textContent = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = '100%';
+            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+            heart.style.animation = 'floatUp 3s ease-in forwards';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1000';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        // Permitir Enter para verificar contraseña
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Animaciones
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                from {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateY(-100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+            @keyframes starFloat {
+                from {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateY(-50px) scale(0);
+                    opacity: 0;
+                }
+            }
+        ;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
